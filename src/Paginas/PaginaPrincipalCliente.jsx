@@ -3,30 +3,15 @@ import styled, { keyframes } from 'styled-components';
 import { Calendar, List, CheckCircle, FileText } from 'react-feather'; 
 
 const servicios = [
-  'Terapia Física',
-  'Terapia Ocupacional',
-  'Psicología',
-  'Nutrición',
-  'Fisioterapia',
-  'Terapia del Habla',
-  'Acupuntura',
-  'Masajes Terapéuticos',
+
 ];
 
-const historiales = [
-  'Cita con el Dr. Pérez - 01/10/2024',
-  'Cita con la Dra. Gómez - 05/10/2024',
-  'Terapia de grupo - 10/10/2024',
-  'Consulta nutricional - 15/10/2024',
-  'Revisar resultados de análisis - 20/10/2024',
+const historialesTerminos = [
+
 ];
 
-const historialesClinicos = [
-  'Consulta Médica - 01/09/2024',
-  'Terapia Física - 15/09/2024',
-  'Evaluación Psicológica - 20/09/2024',
-  'Nutrición - 25/09/2024',
-  'Revisión de Exámenes - 30/09/2024',
+const historialesPoliticas = [
+
 ];
 
 const PaginaPrincipalCliente = () => {
@@ -36,7 +21,7 @@ const PaginaPrincipalCliente = () => {
   const [clinicoIndex, setClinicoIndex] = useState(0);
   const [visibleServices, setVisibleServices] = useState([]);
   const [visibleHistorial, setVisibleHistorial] = useState([]); 
-  const [visibleClinicos, setVisibleClinicos] = useState([]); 
+  const [visibleTerminos, setVisibleClinicos] = useState([]); 
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -64,8 +49,8 @@ const PaginaPrincipalCliente = () => {
 
   useEffect(() => {
     const historialInterval = setInterval(() => {
-      if (historialIndex < historiales.length) {
-        setVisibleHistorial((prev) => [...prev, historiales[historialIndex]]);
+      if (historialIndex < historialesTerminos.length) {
+        setVisibleHistorial((prev) => [...prev, historialesTerminos[historialIndex]]);
         setHistorialIndex((prev) => prev + 1);
       } else {
         setVisibleHistorial([]); 
@@ -78,8 +63,8 @@ const PaginaPrincipalCliente = () => {
 
   useEffect(() => {
     const clinicoInterval = setInterval(() => {
-      if (clinicoIndex < historialesClinicos.length) {
-        setVisibleClinicos((prev) => [...prev, historialesClinicos[clinicoIndex]]);
+      if (clinicoIndex < historialesPoliticas.length) {
+        setVisibleClinicos((prev) => [...prev, historialesPoliticas[clinicoIndex]]);
         setClinicoIndex((prev) => prev + 1);
       } else {
         setVisibleClinicos([]); 
@@ -92,7 +77,7 @@ const PaginaPrincipalCliente = () => {
 
   return (
     <Container>
-      <h1>Bienvenido al Centro de Rehabilitación Integral</h1>
+      <h1>Bienvenido ala cajas fuerte</h1>
 
       <Widgets>
         <Widget>
@@ -125,9 +110,9 @@ const PaginaPrincipalCliente = () => {
         </Widget>
 
         <Widget>
-          <h2><List /> Historial de Citas</h2>
+          <h2><List /> Historial de terminos</h2>
           <HistorialList>
-            {historiales.map((historial, index) => (
+            { historialesTerminos.map((historial, index) => (
               <HistorialItem key={index} visible={visibleHistorial.includes(historial)}>
                 {historial}
               </HistorialItem>
@@ -136,10 +121,10 @@ const PaginaPrincipalCliente = () => {
         </Widget>
 
         <Widget>
-          <h2><FileText /> Historial Clínico</h2>
+          <h2><FileText /> Historial politicas</h2>
           <ClinicosList>
-            {historialesClinicos.map((clinico, index) => (
-              <ClinicoItem key={index} visible={visibleClinicos.includes(clinico)}>
+            {historialesPoliticas.map((clinico, index) => (
+              <ClinicoItem key={index} visible={visibleTerminos.includes(clinico)}>
                 {clinico}
               </ClinicoItem>
             ))}

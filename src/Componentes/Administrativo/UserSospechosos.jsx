@@ -10,7 +10,7 @@ const UserSospechosos = () => {
   useEffect(() => {
     const fetchUsuariosSospechosos = async () => {
       try {
-        const response = await axios.get('https://backendcentro.onrender.com/api/sospechoso');
+        const response = await axios.get('https://backendiot-h632.onrender.com/api/sospechoso');
         setUsuarios(response.data);
       } catch (err) {
         setError('No se pudieron cargar los usuarios sospechosos');
@@ -28,7 +28,7 @@ const UserSospechosos = () => {
       const action = estadoBloqueo ? 'desbloquear' : 'bloquear';
 
       
-      const response = await axios.patch(`https://backendcentro.onrender.com/api/sospechoso/${action}/${userId}`);
+      const response = await axios.patch(`https://backendiot-h632.onrender.com/api/sospechoso/${action}/${userId}`);
 
       
       const updatedUsuarios = usuarios.map(user => 

@@ -3,13 +3,11 @@ import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import ReCAPTCHA from 'react-google-recaptcha';
 import { useAuth } from './AuthContext'; 
 
-import imagen1 from '../Imagenes/ImagenV1.jpg';
-import imagen3 from '../Imagenes/Image4.jpg';
-import imagen4 from '../Imagenes/Image2.png';
-import imagen5 from '../Imagenes/Imagen1.png';
+import imagen1 from '../Imagenes/cajalogin1.jpg';
+import imagen3 from '../Imagenes/cajalogin2.jpg';
+import imagen4 from '../Imagenes/cajalogin3.jpg';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';  
 
 const MySwal = withReactContent(Swal);
@@ -21,15 +19,10 @@ function Login() {
   const [password, setPassword] = useState('');
   const [isLocked, setIsLocked] = useState(false);
   const [lockTimeLeft, setLockTimeLeft] = useState(0);
-  const [captchaToken, setCaptchaToken] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
   const [currentImage, setCurrentImage] = useState(0);
 
-  const images = [imagen1, imagen3, imagen4, imagen5];
-
-  const onCaptchaChange = (token) => {
-    setCaptchaToken(token);
-  };
+  const images = [imagen1, imagen3, imagen4];
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -43,46 +36,29 @@ function Login() {
         return;
     }
 
-    if (!captchaToken) {
-        MySwal.fire({
-            icon: 'warning',
-            title: 'CAPTCHA Requerido',
-            text: 'Por favor, completa el CAPTCHA para continuar.',
-        });
-        return;
-    }
-
     try {
-        const response = await axios.post('https://backendcentro.onrender.com/api/login', {
+        const response = await axios.post('https://backendiot-h632.onrender.com/api/login', {
             user: username,
             password: password,
-            captchaToken,
         });
 
-        const { tipo, qrCodeUrl, message } = response.data;
+        const { tipo, message } = response.data;
 
-        if (qrCodeUrl) {
-            
-            navigate('/codigo-mfa', { state: { qrCodeUrl, user: username, tipo } });
-            return;
-        }
+        if (message === 'Inicio de sesión exitoso') {
+          login(username, tipo);  // Guardar el estado de autenticación
+          const ruta = tipo === 'Administrador' ? '/admin' : '/cliente';
+          navigate(ruta); // Redirige directamente al área correspondiente
+      }
 
-        
     } catch (error) {
       if (error.response) {
         const { lockTimeLeft, attemptsLeft, error: serverError } = error.response.data;
   
-        
         if (serverError === 'Usuario no encontrado') {
           MySwal.fire({
             icon: 'error',
             title: 'Usuario No Encontrado',
             text: 'El usuario ingresado no existe.',
-          });
-          
-          MySwal.fire({
-            icon: 'info',
-            title: 'Intentos restantes: 0',
           });
         } else if (serverError === 'La cuenta no está verificada. Por favor, revisa tu correo para activar tu cuenta.') {
           MySwal.fire({
@@ -100,7 +76,6 @@ function Login() {
           setIsLocked(true);
           setLockTimeLeft(lockTimeLeft);
         } else {
-          
           const attempts = attemptsLeft || 0;
           MySwal.fire({
             icon: 'error',
@@ -117,10 +92,6 @@ function Login() {
       }
     }
   };
-
-
-  
-  
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -277,11 +248,6 @@ function Login() {
                 </div>
               </div>
             </div>
-            <ReCAPTCHA
-              sitekey="6Lc_u2EqAAAAAG8Jg_KW2Rf6qLF0mFY8j79Lifjk" 
-              onChange={onCaptchaChange}
-              style={{ marginBottom: '10px' }}
-            />
             <button type="submit" style={estilos.boton} disabled={isLocked}>
               Iniciar Sesión
             </button>

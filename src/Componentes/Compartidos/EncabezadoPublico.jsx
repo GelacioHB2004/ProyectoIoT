@@ -6,11 +6,30 @@ import axios from 'axios';
 const EncabezadoPublico = () => {
   const [active, setActive] = useState('inicio');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [logoUrl, setLogoUrl] = useState('');
-  const [nombreEmpresa, setNombreEmpresa] = useState('');
-  const [eslogan, setEslogan] = useState('');
+  const [logoUrl, setLogoUrl] = useState('/cajafuerte/src/Componentes/Imagenes/cajalogin1.jpg');
+  const [nombreEmpresa, setNombreEmpresa] = useState('Caja Fuerte');
+  const [eslogan, setEslogan] = useState('Tu seguridad es nuestro prioridad');
   const navigate = useNavigate();
   const menuRef = useRef(null);
+
+  useEffect(() => {
+    const fetchPerfil = async () => {
+      try {
+        const response = await axios.get('https://backendiot-h632.onrender.com/api/perfilF');
+        const data = response.data;
+
+        setLogoUrl(data.logo);
+        setNombreEmpresa(data.nombreEmpresa);
+        setEslogan(data.eslogan);
+      } catch (error) {
+        console.error('Error al obtener datos del perfil:', error);
+      }
+    };
+
+    fetchPerfil();
+    const intervalId = setInterval(fetchPerfil, 10000);
+    return () => clearInterval(intervalId);
+  }, []);
 
   const handleClick = (option) => {
     setActive(option);
@@ -47,26 +66,6 @@ const EncabezadoPublico = () => {
   };
 
   useEffect(() => {
-    const fetchPerfil = async () => {
-      try {
-        const response = await axios.get('https://backendcentro.onrender.com/api/perfilF');
-        const data = response.data;
-
-        setLogoUrl(data.logo);
-        setNombreEmpresa(data.nombreEmpresa);
-        setEslogan(data.eslogan);
-      } catch (error) {
-        console.error('Error al obtener datos del perfil:', error);
-      }
-    };
-
-    fetchPerfil();
-    const intervalId = setInterval(fetchPerfil, 10000);
-    return () => clearInterval(intervalId);
-  }, []);
-
-
-  useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
@@ -90,7 +89,7 @@ const EncabezadoPublico = () => {
           display: flex;
           justify-content: space-between;
           align-items: center;
-           padding: 20px 15px; 
+          padding: 20px 15px; 
           background-color: var(--color-primary);
           color: var(--color-secondary);
         }

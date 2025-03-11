@@ -3,30 +3,15 @@
   import { Calendar, List, CheckCircle, FileText } from 'react-feather'; 
 
   const servicios = [
-    'Terapia Física',
-    'Terapia Ocupacional',
-    'Psicología',
-    'Nutrición',
-    'Fisioterapia',
-    'Terapia del Habla',
-    'Acupuntura',
-    'Masajes Terapéuticos',
+
   ];
 
   const historiales = [
-    'Cita con el Dr. Pérez - 01/10/2024',
-    'Cita con la Dra. Gómez - 05/10/2024',
-    'Terapia de grupo - 10/10/2024',
-    'Consulta nutricional - 15/10/2024',
-    'Revisar resultados de análisis - 20/10/2024',
+
   ];
 
-  const historialesClinicos = [
-    'Consulta Médica - 01/09/2024',
-    'Terapia Física - 15/09/2024',
-    'Evaluación Psicológica - 20/09/2024',
-    'Nutrición - 25/09/2024',
-    'Revisión de Exámenes - 30/09/2024',
+  const historialesServicios = [
+
   ];
 
   const PaginaPrincipal = () => {
@@ -78,8 +63,8 @@
 
     useEffect(() => {
       const clinicoInterval = setInterval(() => {
-        if (clinicoIndex < historialesClinicos.length) {
-          setVisibleClinicos((prev) => [...prev, historialesClinicos[clinicoIndex]]);
+        if (clinicoIndex < historialesServicios.length) {
+          setVisibleClinicos((prev) => [...prev, historialesServicios[clinicoIndex]]);
           setClinicoIndex((prev) => prev + 1);
         } else {
           setVisibleClinicos([]); 
@@ -92,7 +77,7 @@
 
     return (
       <Container>
-        <h1 style={{ color: '#000000' }}>Bienvenido al Centro de Rehabilitación Integral</h1>
+        <h1 style={{ color: '#000000' }}>Tu seguridad, nuestra prioridad.</h1>
 
 
         <Widgets>
@@ -126,7 +111,7 @@
           </Widget>
 
           <Widget>
-            <h2><List /> Historial de Citas</h2>
+            <h2><List /> Historial de politicas</h2>
             <HistorialList>
               {historiales.map((historial, index) => (
                 <HistorialItem key={index} visible={visibleHistorial.includes(historial)}>
@@ -137,9 +122,9 @@
           </Widget>
 
           <Widget>
-            <h2><FileText /> Historial Clínico</h2>
+            <h2><FileText /> Historial terminos</h2>
             <ClinicosList>
-              {historialesClinicos.map((clinico, index) => (
+              {historialesServicios.map((clinico, index) => (
                 <ClinicoItem key={index} visible={visibleClinicos.includes(clinico)}>
                   {clinico}
                 </ClinicoItem>

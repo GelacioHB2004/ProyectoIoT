@@ -58,7 +58,7 @@ function CambiarPassword() {
 
   const checkPasswordHistory = async (password) => {
     try {
-      const response = await axios.post('https://backendcentro.onrender.com/api/cambio/check-password-history', {
+      const response = await axios.post('http://localhost:5000/api/cambio/check-password-history', {
         email,
         password
       });
@@ -90,7 +90,7 @@ function CambiarPassword() {
     const suffix = hash.substring(5);
 
     try {
-      const response = await axios.get(`https://api.pwnedpasswords.com/range/${prefix}`);
+      const response = await axios.get(`http://api.pwnedpasswords.com/range/${prefix}`);
       return response.data.includes(suffix.toUpperCase());
     } catch (error) {
       console.error("Error al verificar la contraseña en HIBP:", error);
@@ -144,7 +144,7 @@ function CambiarPassword() {
     }
 
     try {
-      const response = await axios.post('https://backendcentro.onrender.com/api/cambio/reset-password', {
+      const response = await axios.post('https://backendiot-h632.onrender.com/api/cambio/reset-password', {
         email,
         newPassword,
       });

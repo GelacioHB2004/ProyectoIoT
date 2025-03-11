@@ -7,7 +7,7 @@ const DeslindesHi = () => {
   useEffect(() => {
     const obtenerHistorial = async () => {
       try {
-        const respuesta = await axios.get('https://backendcentro.onrender.com/api/historialdeslindes');
+        const respuesta = await axios.get('https://backendiot-h632.onrender.com/api/historialdeslindes');
         const datos = respuesta.data;
 
         const datosOrdenados = datos.sort((a, b) => {
@@ -38,7 +38,7 @@ const DeslindesHi = () => {
 
   const manejarMostrar = async (id) => {
     try {
-      await axios.patch(`https://backendcentro.onrender.com/api/historialdeslindes/${id}`, { Estado: "activo" });
+      await axios.patch(`http://localhost:500/api/historialdeslindes/${id}`, { Estado: "activo" });
       setHistorial((prevHistorial) => 
         prevHistorial.map((deslinde) => 
           deslinde._id === id ? { ...deslinde, estado: "No vigente" } : deslinde

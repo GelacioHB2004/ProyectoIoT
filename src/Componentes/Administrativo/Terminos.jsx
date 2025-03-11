@@ -17,7 +17,7 @@ const Terminos = () => {
   const [fechaCreacion, setFechaCreacion] = useState('');
   const [version, setVersion] = useState('');
 
-  const apiUrl = 'https://backendcentro.onrender.com/api/terminos';
+  const apiUrl = 'https://backendiot-h632.onrender.com/api/terminos';
 
   useEffect(() => {
     fetchTerminos();

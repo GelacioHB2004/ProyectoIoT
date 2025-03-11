@@ -26,7 +26,7 @@ const Perfil = () => {
     useEffect(() => {
         const fetchPerfiles = async () => {
             try {
-                const response = await axios.get('https://backendcentro.onrender.com/api/perfil');
+                const response = await axios.get('https://backendiot-h632.onrender.com/api/perfil');
                 setPerfiles(response.data);
             } catch (error) {
                 console.error('Error al obtener perfiles:', error.message);
@@ -148,7 +148,7 @@ const Perfil = () => {
 
         try {
             if (editingId) {
-                await axios.put(`https://backendcentro.onrender.com/api/perfil/${editingId}`, formData, {
+                await axios.put(`https://backendiot-h632.onrender.com/api/perfil/${editingId}`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }
@@ -160,7 +160,7 @@ const Perfil = () => {
                     confirmButtonText: 'OK'
                 });
             } else {
-                await axios.post('https://backendcentro.onrender.com/api/perfil', formData, {
+                await axios.post('https://backendiot-h632.onrender.com/api/perfil', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }
@@ -188,7 +188,7 @@ const Perfil = () => {
                 }
             });
             setEditingId(null);
-            const response = await axios.get('https://backendcentro.onrender.com/api/perfil');
+            const response = await axios.get('https://backendiot-h632.onrender.com/api/perfil');
             setPerfiles(response.data);
         } catch (error) {
             console.error('Error al guardar perfil:', error.message);
@@ -215,7 +215,7 @@ const Perfil = () => {
 
         if (result.isConfirmed) {
             try {
-                await axios.delete(`https://backendcentro.onrender.com/api/perfil/${id}`);
+                await axios.delete(`https://backendiot-h632.onrender.com/api/perfil/${id}`);
                 setPerfiles(perfiles.filter(p => p._id !== id));
                 Swal.fire(
                     'Eliminado!',

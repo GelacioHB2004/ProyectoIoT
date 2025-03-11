@@ -27,7 +27,7 @@ function VerificarCorreo() {
     }
 
     try {
-      const response = await axios.get(`https://backendcentro.onrender.com/api/registro/verify/${verificationCode}`);
+      const response = await axios.get(`https://backendiot-h632.onrender.com/api/registro/verify/${verificationCode}`);
       MySwal.fire({
         icon: "success",
         title: "Verificación exitosa",

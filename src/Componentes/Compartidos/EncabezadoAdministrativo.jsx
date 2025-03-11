@@ -16,7 +16,7 @@ const EncabezadoAdministrativo = () => {
   useEffect(() => {
     const fetchPerfil = async () => {
       try {
-        const response = await axios.get('https://backendcentro.onrender.com/api/perfilF');
+        const response = await axios.get('https://backendiot-h632.onrender.com/api/perfilF');
         const data = response.data;
 
         setLogoUrl(data.logo);
@@ -60,21 +60,9 @@ const EncabezadoAdministrativo = () => {
       case "perfil":
         navigate('/admin/perfil');
         break;
-      case "deslinde":
-        navigate('/admin/deslinde');
-        break;
-      case "activity-log":
-        navigate('/admin/activity-log');
-        break;
-      case "registro-password":
-        navigate('/admin/registro-password');
-        break;
-      case "roles":
-        navigate('/admin/roles');
-        break;
-      case "registro-sospechosos":
-        navigate('/admin/registro-sospechosos');
-        break;
+        case "iot":
+          navigate('/admin/iot');
+          break;
       case "cerrarSesion":
         handleLogout();
         break;
@@ -293,29 +281,15 @@ const EncabezadoAdministrativo = () => {
                   <li onClick={() => { handleClick('perfil'); handleMenuClick('perfil'); }}>Perfil</li>
                   <li onClick={() => { handleClick('terminos'); handleMenuClick('terminos'); }}>Términos</li>
                   <li onClick={() => { handleClick('politicas'); handleMenuClick('politicas'); }}>Políticas</li>
-                  <li onClick={() => { handleClick('deslinde'); handleMenuClick('deslinde'); }}>Deslinde</li>
                 </ul>
               )}
             </li>
 
-            <li className="dropdown" onClick={() => toggleDropdown('actividades')}>
-              <span>
-                <AppstoreOutlined style={{ color: '#00B300', marginRight: '8px' }} />
-                Registro de actividades
-              </span>
-              {openDropdown === 'actividades' && (
-                <ul className="dropdown-menu">
-                  <li onClick={() => { handleClick('activity-log'); handleMenuClick('activity-log'); }}>Registro de logeos</li>
-                  <li onClick={() => { handleClick('registro-password'); handleMenuClick('registro-password'); }}>Registro de Contraseña</li>
-                  <li onClick={() => { handleClick('registro-sospechosos'); handleMenuClick('registro-sospechosos'); }}>Lista negra</li>
-                </ul>
-              )}
+            <li onClick={() => handleMenuClick('iot')}>
+              <LogoutOutlined style={{ color: '#00B300', marginRight: '8px' }} />
+              Registro IOT
             </li>
 
-            <li onClick={() => handleMenuClick('roles')}>
-              <TeamOutlined style={{ color: '#00B300', marginRight: '8px' }} />
-              Roles
-            </li>
 
             <li onClick={() => handleMenuClick('cerrarSesion')}>
               <LogoutOutlined style={{ color: '#00B300', marginRight: '8px' }} />

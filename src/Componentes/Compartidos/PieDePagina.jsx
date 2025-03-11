@@ -29,7 +29,7 @@ const PieDePagina = () => {
   });
 
   useEffect(() => {
-    fetch('https://backendcentro.onrender.com/api/perfilF')
+    fetch('https://backendiot-h632.onrender.com/api/perfilF')
       .then(response => {
         if (!response.ok) {
           throw new Error(`Error fetching perfil: ${response.status}`);
@@ -93,11 +93,11 @@ const PieDePagina = () => {
           </div>
           <div>
             <h2 style={headerStyle}>Datos de la empresa</h2>
-            <Link to="/deslindes" style={linkStyle}><FileProtectOutlined style={iconStyle} /> Deslinde legal</Link>
+     
             <Link to="/politicass" style={linkStyle}><LockOutlined style={iconStyle} /> Política de Privacidad</Link>
             <Link to="/terminos-condiciones" style={linkStyle}><FileDoneOutlined style={iconStyle} /> Términos y condiciones</Link>
-            <Link to="/terminos-condiciones" style={linkStyle}><FileProtectOutlined style={iconStyle} /> Misión</Link>
-            <Link to="/terminos-condiciones" style={linkStyle}><FileDoneOutlined style={iconStyle} /> Visión</Link>
+            <Link to="/mision" style={linkStyle}><FileProtectOutlined style={iconStyle} /> Misión</Link>
+            <Link to="/vision" style={linkStyle}><FileDoneOutlined style={iconStyle} /> Visión</Link>
           </div>
         </div>
       </Footer>
@@ -109,7 +109,7 @@ const PieDePagina = () => {
         boxSizing: 'border-box'
       }}>
         <Text style={{ color: '#ffffff', fontSize: '16px' }}>
-          &copy; {new Date().getFullYear()} Centro de Rehabilitación Integral. Todos los derechos reservados.
+          &copy; {new Date().getFullYear()} Cajas Fuertes. Todos los derechos reservados.
         </Text>
       </div>
     </Layout>

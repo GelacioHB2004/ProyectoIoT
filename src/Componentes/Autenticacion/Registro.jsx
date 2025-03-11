@@ -183,7 +183,7 @@ function FormularioRegistro() {
         };
 
         try {
-            await axios.post("https://backendcentro.onrender.com/api/registro", formDataWithPassword);
+            await axios.post("https://backendiot-h632.onrender.com/api/registro", formDataWithPassword);
             MySwal.fire({
                 title: "Tu registro se realizó correctamente",
                 text: "Por favor revisa tu correo para verificar tu cuenta.",

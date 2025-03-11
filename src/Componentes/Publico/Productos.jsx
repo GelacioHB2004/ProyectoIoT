@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import qrImage from "../Imagenes/images.jpg"; // Imagen del QR
-import product1 from "../Imagenes/Himalaya.jpg"; // Ejemplo de producto
-import product2 from "../Imagenes/Imala.jpg";
-import product3 from "../Imagenes/Him.jpg";
-import product4 from "../Imagenes/Hima.jpg";
+import qrImage from "../Imagenes/cajalogin1.jpg"; // Imagen del QR
+import product1 from "../Imagenes/cajalogin2.jpg"; // Ejemplo de producto
+import product2 from "../Imagenes/cajalogin3.jpg";
+import product3 from "../Imagenes/cajalogin1.jpg";
+import product4 from "../Imagenes/cajalogin3.jpg";
 
 const Productos = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -11,7 +11,7 @@ const Productos = () => {
   const productos = [
     {
       id: 1,
-      nombre: "Himalaya Neem Scrub",
+      nombre: "Sapporo",
       imagen: product1,
       descripcion:
         "Suplemento de hierbas orgánicas de neem, para acné suave y piel clara, purificante, ayurvédico, certificado orgánico por USDA.",
@@ -20,7 +20,7 @@ const Productos = () => {
     },
     {
       id: 2,
-      nombre: "Himalaya Skin Care",
+      nombre: "Milan Jumbo",
       imagen: product2,
       descripcion: "Producto excelente para el cuidado de la piel.",
       precio: "$25.00",
@@ -28,7 +28,7 @@ const Productos = () => {
     },
     {
       id: 3,
-      nombre: "Himalaya Skin Wallnes",
+      nombre: "Reims Premium",
       imagen: product3,
       descripcion: "Un producto imprescindible para tu rutina.",
       precio: "$15.00",
@@ -36,7 +36,7 @@ const Productos = () => {
     },
     {
       id: 4,
-      nombre: "Himalaya Sirup",
+      nombre: "Hotelera",
       imagen: product4,
       descripcion: "El mejor producto del mercado para tu salud.",
       precio: "$30.00",

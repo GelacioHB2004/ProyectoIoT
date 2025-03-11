@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import serviceImage1 from "../Imagenes/Terapia fisica.jpg";
-import serviceImage2 from "../Imagenes/Estimulacion temprana.jpg";
-import serviceImage3 from "../Imagenes/Masajes terapeuticos.jpg";
-import serviceImage4 from "../Imagenes/Vendaje Neu.jpg";
-import serviceImage5 from "../Imagenes/Masajes redu.jpg";
-import serviceImage6 from "../Imagenes/Derma.jpg";
+import serviceImage1 from "../Imagenes/cajalogin1.jpg";
+import serviceImage2 from "../Imagenes/cajalogin2.jpg";
+import serviceImage3 from "../Imagenes/cajalogin3.jpg";
+import serviceImage4 from "../Imagenes/cajalogin1.jpg";
+import serviceImage5 from "../Imagenes/cajalogin1.jpg";
+import serviceImage6 from "../Imagenes/cajalogin3.jpg";
 
 const Servicios = () => {
   const [selectedService, setSelectedService] = useState(null);
@@ -12,42 +12,42 @@ const Servicios = () => {
   const servicios = [
     {
       id: 1,
-      nombre: "Terapia fisica",
+      nombre: "Sapporo",
       imagen: serviceImage1,
       descripcion: "Descripción del Servicio 1.",
       precio: "$50.00",
     },
     {
       id: 2,
-      nombre: "Estimulacion temprana",
+      nombre: "Sapporo",
       imagen: serviceImage2,
       descripcion: "Descripción del Servicio 2.",
       precio: "$60.00",
     },
     {
       id: 3,
-      nombre: "Masajes terapeuticos",
+      nombre: "Sapporo",
       imagen: serviceImage3,
       descripcion: "Descripción del Servicio 3.",
       precio: "$70.00",
     },
     {
       id: 4,
-      nombre: "Vendaje neuromuscular",
+      nombre: "Milan Jumbo",
       imagen: serviceImage4,
       descripcion: "Descripción del Servicio 4.",
       precio: "$80.00",
     },
     {
       id: 5,
-      nombre: "Masajes reductivos",
+      nombre: "Milan Jumbo",
       imagen: serviceImage5,
       descripcion: "Descripción del Servicio 5.",
       precio: "$85.00",
     },
     {
       id: 6,
-      nombre: "Fisioterapia dermatofuncional",
+      nombre: "Milan Jumbo",
       imagen: serviceImage6,
       descripcion: "Descripción del Servicio 6.",
       precio: "$90.00",
@@ -164,9 +164,9 @@ const Servicios = () => {
               style={styles.boton}
               onMouseEnter={(e) => (e.target.style.backgroundColor = styles.botonHover.backgroundColor)}
               onMouseLeave={(e) => (e.target.style.backgroundColor = "#007bff")}
-              onClick={() => alert("Cita solicitada para " + selectedService.nombre)}
+              onClick={() => alert("caja " + selectedService.nombre)}
             >
-              Sacar cita
+              Comprar
             </button>
           </div>
         </div>

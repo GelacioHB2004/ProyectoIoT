@@ -17,7 +17,7 @@ const Deslinde = () => {
   const [fechaCreacion, setFechaCreacion] = useState('');
   const [version, setVersion] = useState('');
 
-  const apiUrl = 'https://backendcentro.onrender.com/api/deslinde';
+  const apiUrl = 'https://backendiot-h632.onrender.com/api/deslinde';
 
   useEffect(() => {
     fetchDeslindes();

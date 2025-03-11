@@ -7,7 +7,7 @@ const TerminosHi = () => {
   useEffect(() => {
     const obtenerHistorial = async () => {
       try {
-        const respuesta = await axios.get('https://backendcentro.onrender.com/api/historialterminos');
+        const respuesta = await axios.get('https://backendiot-h632.onrender.com/api/historialterminos');
         const datos = respuesta.data;
 
         const datosOrdenados = datos.sort((a, b) => {
@@ -38,7 +38,7 @@ const TerminosHi = () => {
 
   const manejarMostrar = async (id) => {
     try {
-      await axios.patch(`https://backendcentro.onrender.com/api/historialterminos/${id}`, { Estado: "activo" });
+      await axios.patch(`https://backendiot-h632.onrender.com/api/historialterminos/${id}`, { Estado: "activo" });
       setHistorial((prevHistorial) => 
         prevHistorial.map((termino) => 
           termino._id === id ? { ...termino, estado: "No vigente" } : termino

@@ -17,15 +17,14 @@ const LayoutConEncabezado = ({ children }) => {
   let encabezado;
   let pieDePagina;
 
-  
   if (location.pathname.startsWith('/admin')) {
-    if (!user || user.tipo !== 'Administrador') {
+    if (!user) {
       return <Navigate to="/login" replace />; 
     }
     encabezado = <EncabezadoAdministrativo />;
     pieDePagina = <PieDePaginaAdmin />;
   } else if (location.pathname.startsWith('/cliente')) {
-    if (!user || user.tipo !== 'Cliente') {
+    if (!user) {
       return <Navigate to="/login" replace />; 
     }
     encabezado = <EncabezadoCliente />;

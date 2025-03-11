@@ -29,7 +29,7 @@ const PieDePaginaAdmin = () => {
   });
 
   useEffect(() => {
-    fetch('https://backendcentro.onrender.com/api/perfilF')
+    fetch('https://backendiot-h632.onrender.com/api/perfilF')
       .then(response => {
         if (!response.ok) {
           throw new Error(`Error fetching perfil: ${response.status}`);
@@ -93,7 +93,7 @@ const PieDePaginaAdmin = () => {
           </div>
           <div>
             <h2 style={headerStyle}>Datos de la empresa</h2>
-            <Link to="/admin/deslindes" style={linkStyle}><FileProtectOutlined style={iconStyle} /> Deslinde legal</Link>
+    
             <Link to="/admin/politicass" style={linkStyle}><LockOutlined style={iconStyle} /> Política de Privacidad</Link>
             <Link to="/admin/terminos-condiciones" style={linkStyle}><FileDoneOutlined style={iconStyle} /> Términos y condiciones</Link>
           </div>
@@ -107,7 +107,7 @@ const PieDePaginaAdmin = () => {
         boxSizing: 'border-box'
       }}>
         <Text style={{ color: '#ffffff', fontSize: '16px' }}>
-          &copy; {new Date().getFullYear()} Centro de Rehabilitación Integral. Todos los derechos reservados.
+          &copy; {new Date().getFullYear()} Caja Fuerte. Todos los derechos reservados.
         </Text>
       </div>
     </Layout>

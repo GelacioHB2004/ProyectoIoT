@@ -24,7 +24,7 @@ function VerifyMFA({ onLoginSuccess }) {
     setIsVerifying(true);
   
     try {
-      const response = await axios.post('https://backendcentro.onrender.com/api/login/verify-mfa', {
+      const response = await axios.post('https://backendiot-h632.onrender.com/api/login/verify-mfa', {
         user: user,
         token: mfaCode,
       });

@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { HomeOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons'; 
+import { HomeOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -24,7 +24,7 @@ const EncabezadoCliente = () => {
   useEffect(() => {
     const fetchPerfil = async () => {
       try {
-        const response = await axios.get('https://backendcentro.onrender.com/api/perfilF');
+        const response = await axios.get('https://backendiot-h632.onrender.com/api/perfilF');
         const data = response.data;
 
         setLogoUrl(data.logo);
@@ -45,23 +45,32 @@ const EncabezadoCliente = () => {
       case "home":
         navigate('/cliente/');
         break;
+      case "iot":
+        navigate('/cliente/Registroiot');
+        break;
+      case "estadoiot":
+        navigate('/cliente/CajaFuerteControl');
+        break;
+        case "ControlCajaFuerte":
+          navigate('/cliente/ControlCajaFuerte');
+          break;
       case "cerrarSesion":
         try {
-         
+
           console.log('Cerrando sesión...');
 
-         
+
           await fetch('/api/logout', {
             method: 'POST',
-            credentials: 'include', 
+            credentials: 'include',
             headers: {
               'Content-Type': 'application/json',
             },
           });
-          localStorage.removeItem('token'); 
-          sessionStorage.removeItem('token'); 
+          localStorage.removeItem('token');
+          sessionStorage.removeItem('token');
 
-          
+
           navigate('/');
         } catch (error) {
           console.error('Error al cerrar sesión:', error);
@@ -191,11 +200,11 @@ const EncabezadoCliente = () => {
           }
         }
       `}</style>
-      
+
 
 
       <header className="header">
-      <div className="logo">
+        <div className="logo">
           {logoUrl && (
             <img src={logoUrl} alt="Logo de la Empresa" style={{ height: '50px', marginRight: '10px' }} />
           )}
@@ -209,6 +218,19 @@ const EncabezadoCliente = () => {
             <li className={active === 'perfil' ? 'active' : ''} onClick={() => { handleClick('perfil'); handleMenuClick('perfil'); }}>
               <HomeOutlined style={{ color: '#00B300', marginRight: '8px' }} />
               Home
+            </li>
+
+            <li onClick={() => handleMenuClick('iot')}>
+              <LogoutOutlined style={{ color: '#00B300', marginRight: '8px' }} />
+              Registro IOT
+            </li>
+            <li onClick={() => handleMenuClick('estadoiot')}>
+              <LogoutOutlined style={{ color: '#00B300', marginRight: '8px' }} />
+              Estado y Manipilacion de IOT
+            </li>
+            <li onClick={() => handleMenuClick('ControlCajaFuerte')}>
+              <LogoutOutlined style={{ color: '#00B300', marginRight: '8px' }} />
+              Control IoTD
             </li>
             <li className={active === 'cerrarSesion' ? 'active' : ''} onClick={() => { handleClick('cerrarSesion'); handleMenuClick('cerrarSesion'); }}>
               <LogoutOutlined style={{ color: '#00B300', marginRight: '8px' }} />

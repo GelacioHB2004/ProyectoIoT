@@ -7,7 +7,7 @@ const PoliticasHi = () => {
   useEffect(() => {
     const obtenerHistorial = async () => {
       try {
-        const respuesta = await axios.get('https://backendcentro.onrender.com/api/historialpoliticas');
+        const respuesta = await axios.get('https://backendiot-h632.onrender.com/api/historialpoliticas');
         const datos = respuesta.data;
 
         const datosOrdenados = datos.sort((a, b) => {
@@ -38,7 +38,7 @@ const PoliticasHi = () => {
 
   const manejarMostrar = async (id) => {
     try {
-      await axios.patch(`https://backendcentro.onrender.com/api/historialpoliticas/${id}`, { Estado: "activo" });
+      await axios.patch(`https://backendiot-h632.onrender.com/api/historialpoliticas/${id}`, { Estado: "activo" });
       setHistorial((prevHistorial) => 
         prevHistorial.map((politica) => 
           politica._id === id ? { ...politica, estado: "No vigente" } : politica

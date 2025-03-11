@@ -17,7 +17,7 @@ const Politicas = () => {
   const [fechaCreacion, setFechaCreacion] = useState('');
   const [version, setVersion] = useState('');
 
-  const apiUrl = 'https://backendcentro.onrender.com/api/politicas';  
+  const apiUrl = 'https://backendiot-h632.onrender.com/api/politicas';  
 
   useEffect(() => {
     fetchPoliticas();
