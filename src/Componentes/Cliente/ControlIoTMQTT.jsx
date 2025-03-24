@@ -1,52 +1,67 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
-import axios from "axios"
-import { io } from "socket.io-client"
+import { useState, useEffect, useRef } from "react";
+import axios from "axios";
+import { io } from "socket.io-client";
 
 const ControlMqtt = () => {
-  const [status, setStatus] = useState("Desconocido")
-  const [buzzerStatus, setBuzzerStatus] = useState("Desactivado")
-  const [isHovering, setIsHovering] = useState(null)
-  const [isButtonPressed, setIsButtonPressed] = useState(false)
+  const [status, setStatus] = useState("Desconocido");
+  const [buzzerStatus, setBuzzerStatus] = useState("Desactivado");
+  const [isHovering, setIsHovering] = useState(null);
+  const [isButtonPressed, setIsButtonPressed] = useState(false);
 
   // Referencias para animaciones
-  const scanLineRef = useRef(null)
-  const pulseRef = useRef(null)
-  const rotateRef = useRef(null)
-  const buttonGlowRef = useRef(null)
+  const scanLineRef = useRef(null);
+  const pulseRef = useRef(null);
+  const rotateRef = useRef(null);
+  const buttonGlowRef = useRef(null);
 
+  // Obtener el estado inicial de la caja al montar el componente
   useEffect(() => {
-    const socket = io("https://backendiot-h632.onrender.com")
+    const fetchInitialStatus = async () => {
+      try {
+        const response = await axios.get("https://backendiot-h632.onrender.com/api/caja/estado");
+        setStatus(response.data.status || "Desconocido");
+      } catch (error) {
+        console.error("Error al obtener el estado inicial de la caja:", error.message);
+      }
+    };
+
+    fetchInitialStatus();
+  }, []);
+
+  // Configurar WebSocket para actualizaciones en tiempo real
+  useEffect(() => {
+    const socket = io("https://backendiot-h632.onrender.com");
 
     socket.on("connect", () => {
-      console.log("Conectado al servidor WebSocket")
-    })
+      console.log("Conectado al servidor WebSocket");
+    });
 
     socket.on("cajaStatus", (newStatus) => {
-      console.log("Estado recibido:", newStatus)
-      setStatus(newStatus)
-    })
+      console.log("Estado recibido:", newStatus);
+      setStatus(newStatus);
+    });
 
     socket.on("buzzerStatus", (newBuzzerStatus) => {
-      console.log("Estado del buzzer recibido:", newBuzzerStatus)
-      setBuzzerStatus(newBuzzerStatus)
-    })
+      console.log("Estado del buzzer recibido:", newBuzzerStatus);
+      setBuzzerStatus(newBuzzerStatus);
+    });
 
     socket.on("connect_error", (err) => {
-      console.error("Error de conexión WebSocket:", err)
-    })
+      console.error("Error de conexión WebSocket:", err.message);
+    });
 
     return () => {
-      socket.disconnect()
-      console.log("Desconectado del servidor WebSocket")
-    }
-  }, [])
+      socket.disconnect();
+      console.log("Desconectado del servidor WebSocket");
+    };
+  }, []);
 
   // Agregar estilos CSS globales para animaciones
   useEffect(() => {
-    const styleSheet = document.createElement("style")
-    styleSheet.type = "text/css"
+    const styleSheet = document.createElement("style");
+    styleSheet.type = "text/css";
     styleSheet.innerText = `
       @keyframes scanLine {
         0% { top: -50px; }
@@ -71,47 +86,47 @@ const ControlMqtt = () => {
         50% { opacity: 0.3; }
         100% { opacity: 1; }
       }
-    `
-    document.head.appendChild(styleSheet)
+    `;
+    document.head.appendChild(styleSheet);
 
     return () => {
-      document.head.removeChild(styleSheet)
-    }
-  }, [])
+      document.head.removeChild(styleSheet);
+    };
+  }, []);
 
   const handleOpenCaja = async () => {
-    setIsButtonPressed(true)
+    setIsButtonPressed(true);
     try {
-      const response = await axios.post("https://backendiot-h632.onrender.com/api/mqtt/abrir")
-      alert(response.data.message)
+      const response = await axios.post("https://backendiot-h632.onrender.com/api/caja/abrir");
+      alert(response.data.message);
     } catch (error) {
-      console.error("Error al abrir la caja:", error)
-      alert("Error al abrir la caja")
+      console.error("Error al abrir la caja:", error.response?.data?.error || error.message);
+      alert(error.response?.data?.error || "Error al abrir la caja");
     } finally {
-      setTimeout(() => setIsButtonPressed(false), 300)
+      setTimeout(() => setIsButtonPressed(false), 300);
     }
-  }
+  };
 
   // Obtener colores según el estado
   const getStatusColor = () => {
     if (status === "ABIERTA") {
-      return "#00e5ff"
+      return "#00e5ff";
     } else if (status === "CERRADA") {
-      return "#64ffda"
+      return "#64ffda";
     } else {
-      return "#b388ff"
+      return "#b388ff";
     }
-  }
+  };
 
   const getBuzzerColor = () => {
-    return buzzerStatus === "ACTIVADO" ? "#ff4081" : "#64ffda"
-  }
+    return buzzerStatus === "ACTIVADO" ? "#ff4081" : "#64ffda";
+  };
 
-  const statusColor = getStatusColor()
-  const buzzerColor = getBuzzerColor()
+  const statusColor = getStatusColor();
+  const buzzerColor = getBuzzerColor();
 
   // Generar un ID único para la sesión
-  const sessionId = useRef(`ID: ${Math.random().toString(36).substring(2, 8).toUpperCase()}`)
+  const sessionId = useRef(`ID: ${Math.random().toString(36).substring(2, 8).toUpperCase()}`);
 
   return (
     <div
@@ -652,10 +667,7 @@ const ControlMqtt = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default ControlMqtt;
-
-
-
