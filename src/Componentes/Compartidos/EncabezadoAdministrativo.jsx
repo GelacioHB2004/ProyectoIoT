@@ -60,9 +60,19 @@ const EncabezadoAdministrativo = () => {
       case "perfil":
         navigate('/admin/perfil');
         break;
-        case "iot":
-          navigate('/admin/iot');
-          break;
+        case "mision":
+        navigate('/admin/mision');
+        break;
+        case "vision":
+        navigate('/admin/vision');
+        break;
+      case "productos":
+          navigate('/admin/productos');
+        break;
+        case "Reportes":
+          navigate('/admin/reportesproductos');
+        break;
+          
       case "cerrarSesion":
         handleLogout();
         break;
@@ -281,13 +291,18 @@ const EncabezadoAdministrativo = () => {
                   <li onClick={() => { handleClick('perfil'); handleMenuClick('perfil'); }}>Perfil</li>
                   <li onClick={() => { handleClick('terminos'); handleMenuClick('terminos'); }}>Términos</li>
                   <li onClick={() => { handleClick('politicas'); handleMenuClick('politicas'); }}>Políticas</li>
+                  <li onClick={() => { handleClick('mision'); handleMenuClick('mision'); }}>Misión</li>
+                  <li onClick={() => { handleClick('vision'); handleMenuClick('vision'); }}>Visión</li>
                 </ul>
               )}
             </li>
-
-            <li onClick={() => handleMenuClick('iot')}>
+            <li onClick={() => handleMenuClick('productos')}>
               <LogoutOutlined style={{ color: '#00B300', marginRight: '8px' }} />
-              Registro IOT
+              Productos
+            </li>
+            <li onClick={() => handleMenuClick('Reportes')}>
+              <LogoutOutlined style={{ color: '#00B300', marginRight: '8px' }} />
+              Generar Reporte
             </li>
 
 

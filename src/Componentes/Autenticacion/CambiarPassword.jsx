@@ -58,7 +58,7 @@ function CambiarPassword() {
 
   const checkPasswordHistory = async (password) => {
     try {
-      const response = await axios.post('http://localhost:5000/api/cambio/check-password-history', {
+      const response = await axios.post('https://backendiot-h632.onrender.com/api/cambio/check-password-history', {
         email,
         password
       });

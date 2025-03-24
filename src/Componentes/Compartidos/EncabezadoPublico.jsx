@@ -8,7 +8,7 @@ const EncabezadoPublico = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [logoUrl, setLogoUrl] = useState('/cajafuerte/src/Componentes/Imagenes/cajalogin1.jpg');
   const [nombreEmpresa, setNombreEmpresa] = useState('Caja Fuerte');
-  const [eslogan, setEslogan] = useState('Tu seguridad es nuestro prioridad');
+  const [eslogan, setEslogan] = useState('');
   const navigate = useNavigate();
   const menuRef = useRef(null);
 
@@ -46,11 +46,12 @@ const EncabezadoPublico = () => {
         navigate('/');
         break;
       case "productos":
-        navigate('/productos');
+        navigate('/productosp');
         break;
       case "servicios":
         navigate('/servicios');
         break;
+
       case "login":
         navigate('/login');
         break;

@@ -95,6 +95,8 @@ const PieDePaginaCliente = () => {
             <h2 style={headerStyle}>Datos de la empresa</h2>
             <Link to="/cliente/politicass" style={linkStyle}><LockOutlined style={iconStyle} /> Política de Privacidad</Link>
             <Link to="/cliente/terminos-condiciones" style={linkStyle}><FileDoneOutlined style={iconStyle} /> Términos y condiciones</Link>
+            <Link to="/cliente/misionf" style={linkStyle}><FileDoneOutlined style={iconStyle} /> Misión</Link>
+            <Link to="/cliente/visionf" style={linkStyle}><FileDoneOutlined style={iconStyle} /> Visión</Link>
           </div>
         </div>
       </Footer>

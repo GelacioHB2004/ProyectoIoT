@@ -45,9 +45,9 @@ function Login() {
         const { tipo, message } = response.data;
 
         if (message === 'Inicio de sesión exitoso') {
-          login(username, tipo);  // Guardar el estado de autenticación
+          login(username, tipo);  
           const ruta = tipo === 'Administrador' ? '/admin' : '/cliente';
-          navigate(ruta); // Redirige directamente al área correspondiente
+          navigate(ruta); 
       }
 
     } catch (error) {
@@ -122,7 +122,7 @@ function Login() {
       alignItems: 'center',
       minHeight: '5vh',
       padding: '55px',
-      backgroundColor: '#ffffff',
+      backgroundColor: '#1C2526', // Cambio aplicado aquí con el color pizarra exacto
     },
     contenedorLogin: {
       backgroundColor: '#fff',

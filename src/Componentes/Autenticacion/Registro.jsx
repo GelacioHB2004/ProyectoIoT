@@ -1,14 +1,58 @@
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import axios from "axios";
 import zxcvbn from "zxcvbn";
 import sha1 from "js-sha1";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser, faEnvelope, faLock, faPhone, faSignInAlt, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import {
+    Container,
+    Typography,
+    TextField,
+    Button,
+    FormControl,
+    InputAdornment,
+    IconButton,
+    Box,
+    LinearProgress,
+    Paper,
+    Grid,
+    useTheme,
+    useMediaQuery,
+} from "@mui/material";
+import {
+    Person,
+    Email,
+    Lock,
+    Phone,
+    Visibility,
+    VisibilityOff,
+} from "@mui/icons-material";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const MySwal = withReactContent(Swal);
+
+// Tema personalizado
+const theme = createTheme({
+    palette: {
+        primary: {
+            main: "#1976d2", // Azul moderno
+        },
+        secondary: {
+            main: "#4caf50", // Verde
+        },
+        background: {
+            default: "#f5f5f5", // Fondo claro
+        },
+    },
+    typography: {
+        fontFamily: "'Roboto', sans-serif",
+        h4: {
+            fontWeight: 600,
+            color: "#1976d2",
+        },
+    },
+});
 
 function FormularioRegistro() {
     const navigate = useNavigate();
@@ -30,9 +74,8 @@ function FormularioRegistro() {
         },
     });
 
-    useEffect(() => {
-
-    }, []);
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -124,7 +167,7 @@ function FormularioRegistro() {
                 break;
             }
         }
-    
+
         setPasswordError(errorMessage);
     };
 
@@ -208,8 +251,7 @@ function FormularioRegistro() {
                 });
             }
         }
-    }
-
+    };
 
     const getPasswordStrengthText = (strength) => {
         switch (strength) {
@@ -227,230 +269,219 @@ function FormularioRegistro() {
         }
     };
 
-    const estilos = {
-        contenedor: {
-            textAlign: "left",
-            backgroundColor: "#e0f7fa",
-            padding: "15px",
-            borderRadius: "15px",
-            maxWidth: "400px",
-            width: "90%",
-            margin: "auto",
-            boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
-            marginTop: "30px",
-        },
-        titulo: {
-            fontSize: "28px",
-            marginBottom: "20px",
-            color: "#004d40",
-            textAlign: "center",
-        },
-        campo: {
-            marginBottom: "15px",
-            textAlign: "left",
-        },
-        etiqueta: {
-            display: "block",
-            marginBottom: "5px",
-            fontWeight: "bold",
-            color: "#00695c",
-        },
-        input: {
-            width: "100%",
-            padding: "10px",
-            borderRadius: "8px",
-            border: "1px solid #b2dfdb",
-            fontSize: "16px",
-            boxSizing: "border-box",
-        },
-        boton: {
-            padding: "10px 15px",
-            borderRadius: "8px",
-            cursor: "pointer",
-            fontSize: "16px",
-            backgroundColor: "#4CAF50", // Verde
-            color: "white",
-            border: "none",
-            marginTop: "20px",
-            width: "100%",
-        },
-        mensajeError: {
-            color: "red",
-            marginTop: "10px",
-        },
-        medidor: {
-            marginTop: "10px",
-            fontWeight: "bold",
-            color: passwordStrength < 2 ? "red" : passwordStrength < 3 ? "orange" : "green",
-        },
-        inputPasswordContainer: {
-            position: "relative", 
-            width: "100%", 
-        },
-        input: {
-            width: "100%", 
-            padding: "10px",
-            paddingRight: "40px", 
-            borderRadius: "8px",
-            border: "1px solid #b2dfdb",
-            fontSize: "16px",
-            boxSizing: "border-box",
-        },
-        toggleIcon: {
-            position: "absolute",
-            top: "50%",
-            right: "10px", 
-            transform: "translateY(-50%)",
-            cursor: "pointer",
-            color: "#00695c",
-        },
-    };
-
     return (
-        <div style={estilos.contenedor}>
-            <h2 style={estilos.titulo}>Registro</h2>
-            <form onSubmit={handleSubmit}>
-                <div style={estilos.campo}>
-                    <label style={estilos.etiqueta}>
-                        <FontAwesomeIcon icon={faUser} /> Nombre
-                    </label>
-                    <input
-                        type="text"
-                        name="datos_cliente.nombre"
-                        value={formData.datos_cliente.nombre}
-                        onChange={handleChange}
-                        style={estilos.input}
-                        placeholder="Ingresa tu nombre"
-                        required
-                    />
-                    {formErrors["datos_cliente.nombre"] && (
-                        <p style={estilos.mensajeError}>{formErrors["datos_cliente.nombre"]}</p>
-                    )}
-                </div>
-                <div style={estilos.campo}>
-                    <label style={estilos.etiqueta}>
-                        <FontAwesomeIcon icon={faUser} /> Apellido Paterno
-                    </label>
-                    <input
-                        type="text"
-                        name="datos_cliente.apellidoPaterno"
-                        value={formData.datos_cliente.apellidoPaterno}
-                        onChange={handleChange}
-                        style={estilos.input}
-                        placeholder="Ingresa tu apellido paterno"
-                        required
-                    />
-                    {formErrors["datos_cliente.apellidoPaterno"] && (
-                        <p style={estilos.mensajeError}>{formErrors["datos_cliente.apellidoPaterno"]}</p>
-                    )}
-                </div>
-                <div style={estilos.campo}>
-                    <label style={estilos.etiqueta}>
-                        <FontAwesomeIcon icon={faUser} /> Apellido Materno
-                    </label>
-                    <input
-                        type="text"
-                        name="datos_cliente.apellidoMaterno"
-                        value={formData.datos_cliente.apellidoMaterno}
-                        onChange={handleChange}
-                        style={estilos.input}
-                        placeholder="Ingresa tu apellido materno"
-                        required
-                    />
-                    {formErrors["datos_cliente.apellidoMaterno"] && (
-                        <p style={estilos.mensajeError}>{formErrors["datos_cliente.apellidoMaterno"]}</p>
-                    )}
-                </div>
-                <div style={estilos.campo}>
-                    <label style={estilos.etiqueta}>
-                        <FontAwesomeIcon icon={faPhone} /> Teléfono
-                    </label>
-                    <input
-                        type="text"
-                        name="datos_cliente.telefono"
-                        value={formData.datos_cliente.telefono}
-                        onChange={handleChange}
-                        style={estilos.input}
-                        placeholder="Ingresa tu teléfono"
-                        required
-                        maxLength="10"
-                        onKeyPress={(e) => {
-
-                            if (!/[0-9]/.test(e.key)) {
-                                e.preventDefault();
-                            }
-                        }}
-                    />
-
-                    {formErrors["datos_cliente.telefono"] && (
-                        <p style={estilos.mensajeError}>{formErrors["datos_cliente.telefono"]}</p>
-                    )}
-                </div>
-                <div style={estilos.campo}>
-                    <label style={estilos.etiqueta}>
-                        <FontAwesomeIcon icon={faEnvelope} /> Correo
-                    </label>
-                    <input
-                        type="email"
-                        name="correo"
-                        value={formData.correo}
-                        onChange={handleChange}
-                        style={estilos.input}
-                        placeholder="Ingresa tu correo electrónico"
-                        required
-                    />
-                </div>
-                <div style={estilos.campo}>
-                    <label style={estilos.etiqueta}>
-                        <FontAwesomeIcon icon={faUser} /> Usuario
-                    </label>
-                    <input
-                        type="text"
-                        name="username"
-                        value={formData.username}
-                        onChange={handleChange}
-                        style={estilos.input}
-                        placeholder="Ingresa tu usuario"
-                        required
-                    />
-                    {formErrors.username && (
-                        <p style={estilos.mensajeError}>{formErrors.username}</p>
-                    )}
-                </div>
-                <div style={estilos.campo}>
-                    <label style={estilos.etiqueta}>
-                        <FontAwesomeIcon icon={faLock} /> Contraseña
-                    </label>
-                    <div style={estilos.inputPasswordContainer}>
-                        <input
-                            type={passwordVisible ? "text" : "password"}
-                            name="password"
-                            value={formData.password}
-                            onChange={handleChange}
-                            style={estilos.input}
-                            placeholder="Crea una contraseña"
-                            required
-                        />
-                        <FontAwesomeIcon
-                            icon={passwordVisible ? faEyeSlash : faEye}
-                            style={estilos.toggleIcon}
-                            onClick={handlePasswordVisibility}
-                        />
-                    </div>
-                    {passwordStrength > 0 && (
-                        <p style={estilos.medidor}>
-                            Fuerza de la contraseña: {getPasswordStrengthText(passwordStrength)}
-                        </p>
-                    )}
-                    {formErrors.password && (
-                        <p style={estilos.mensajeError}>{formErrors.password}</p>
-                    )}
-                </div>
-                <button type="submit" style={estilos.boton}>
-                    <FontAwesomeIcon icon={faSignInAlt} /> Registrar
-                </button>
-            </form>
-        </div>
+        <ThemeProvider theme={theme}>
+            <Container
+                maxWidth="sm"
+                sx={{
+                    mt: 4,
+                    mb: 4,
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                }}
+            >
+                <Paper
+                    elevation={3}
+                    sx={{
+                        p: 4,
+                        width: "100%",
+                        borderRadius: 2,
+                        bgcolor: "background.paper",
+                    }}
+                >
+                    <Typography variant="h4" align="center" gutterBottom>
+                        Registro
+                    </Typography>
+                    <form onSubmit={handleSubmit}>
+                        <Grid container spacing={2}>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    fullWidth
+                                    label="Nombre"
+                                    name="datos_cliente.nombre"
+                                    value={formData.datos_cliente.nombre}
+                                    onChange={handleChange}
+                                    placeholder="Ingresa tu nombre"
+                                    required
+                                    error={!!formErrors["datos_cliente.nombre"]}
+                                    helperText={formErrors["datos_cliente.nombre"]}
+                                    InputProps={{
+                                        startAdornment: (
+                                            <InputAdornment position="start">
+                                                <Person />
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    fullWidth
+                                    label="Apellido Paterno"
+                                    name="datos_cliente.apellidoPaterno"
+                                    value={formData.datos_cliente.apellidoPaterno}
+                                    onChange={handleChange}
+                                    placeholder="Ingresa tu apellido paterno"
+                                    required
+                                    error={!!formErrors["datos_cliente.apellidoPaterno"]}
+                                    helperText={formErrors["datos_cliente.apellidoPaterno"]}
+                                    InputProps={{
+                                        startAdornment: (
+                                            <InputAdornment position="start">
+                                                <Person />
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    fullWidth
+                                    label="Apellido Materno"
+                                    name="datos_cliente.apellidoMaterno"
+                                    value={formData.datos_cliente.apellidoMaterno}
+                                    onChange={handleChange}
+                                    placeholder="Ingresa tu apellido materno"
+                                    required
+                                    error={!!formErrors["datos_cliente.apellidoMaterno"]}
+                                    helperText={formErrors["datos_cliente.apellidoMaterno"]}
+                                    InputProps={{
+                                        startAdornment: (
+                                            <InputAdornment position="start">
+                                                <Person />
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    fullWidth
+                                    label="Teléfono"
+                                    name="datos_cliente.telefono"
+                                    value={formData.datos_cliente.telefono}
+                                    onChange={handleChange}
+                                    placeholder="Ingresa tu teléfono"
+                                    required
+                                    error={!!formErrors["datos_cliente.telefono"]}
+                                    helperText={formErrors["datos_cliente.telefono"]}
+                                    InputProps={{
+                                        startAdornment: (
+                                            <InputAdornment position="start">
+                                                <Phone />
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                    inputProps={{
+                                        maxLength: 10,
+                                    }}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    fullWidth
+                                    label="Correo"
+                                    name="correo"
+                                    value={formData.correo}
+                                    onChange={handleChange}
+                                    placeholder="Ingresa tu correo electrónico"
+                                    required
+                                    InputProps={{
+                                        startAdornment: (
+                                            <InputAdornment position="start">
+                                                <Email />
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    fullWidth
+                                    label="Usuario"
+                                    name="username"
+                                    value={formData.username}
+                                    onChange={handleChange}
+                                    placeholder="Ingresa tu usuario"
+                                    required
+                                    error={!!formErrors.username}
+                                    helperText={formErrors.username}
+                                    InputProps={{
+                                        startAdornment: (
+                                            <InputAdornment position="start">
+                                                <Person />
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    fullWidth
+                                    label="Contraseña"
+                                    name="password"
+                                    type={passwordVisible ? "text" : "password"}
+                                    value={formData.password}
+                                    onChange={handleChange}
+                                    placeholder="Crea una contraseña"
+                                    required
+                                    error={!!formErrors.password}
+                                    helperText={formErrors.password}
+                                    InputProps={{
+                                        startAdornment: (
+                                            <InputAdornment position="start">
+                                                <Lock />
+                                            </InputAdornment>
+                                        ),
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <IconButton onClick={handlePasswordVisibility}>
+                                                    {passwordVisible ? <VisibilityOff /> : <Visibility />}
+                                                </IconButton>
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                />
+                                {passwordStrength > 0 && (
+                                    <Box sx={{ mt: 1 }}>
+                                        <LinearProgress
+                                            variant="determinate"
+                                            value={(passwordStrength / 4) * 100}
+                                            sx={{
+                                                height: 8,
+                                                borderRadius: 4,
+                                                backgroundColor: "lightgray",
+                                                "& .MuiLinearProgress-bar": {
+                                                    backgroundColor:
+                                                        passwordStrength < 2
+                                                            ? "red"
+                                                            : passwordStrength < 3
+                                                            ? "orange"
+                                                            : "green",
+                                                },
+                                            }}
+                                        />
+                                        <Typography variant="caption" color="textSecondary">
+                                            Fuerza de la contraseña: {getPasswordStrengthText(passwordStrength)}
+                                        </Typography>
+                                    </Box>
+                                )}
+                            </Grid>
+                        </Grid>
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            color="primary"
+                            fullWidth
+                            sx={{ mt: 3, py: 1.5 }}
+                        >
+                            Registrar
+                        </Button>
+                    </form>
+                </Paper>
+            </Container>
+        </ThemeProvider>
     );
 }
 

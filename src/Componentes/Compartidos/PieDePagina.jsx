@@ -96,8 +96,8 @@ const PieDePagina = () => {
      
             <Link to="/politicass" style={linkStyle}><LockOutlined style={iconStyle} /> Política de Privacidad</Link>
             <Link to="/terminos-condiciones" style={linkStyle}><FileDoneOutlined style={iconStyle} /> Términos y condiciones</Link>
-            <Link to="/mision" style={linkStyle}><FileProtectOutlined style={iconStyle} /> Misión</Link>
-            <Link to="/vision" style={linkStyle}><FileDoneOutlined style={iconStyle} /> Visión</Link>
+            <Link to="/misionf" style={linkStyle}><FileProtectOutlined style={iconStyle} /> Misión</Link>
+            <Link to="/visionf" style={linkStyle}><FileDoneOutlined style={iconStyle} /> Visión</Link>
           </div>
         </div>
       </Footer>

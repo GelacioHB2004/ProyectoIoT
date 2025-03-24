@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { HomeOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons';
+import { HomeOutlined, LogoutOutlined, UserOutlined, ShopOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -48,12 +48,22 @@ const EncabezadoCliente = () => {
       case "iot":
         navigate('/cliente/Registroiot');
         break;
-      case "estadoiot":
-        navigate('/cliente/CajaFuerteControl');
-        break;
+
         case "ControlCajaFuerte":
           navigate('/cliente/ControlCajaFuerte');
           break;
+
+          case "productoscliente":
+            navigate('/cliente/productosC');
+            break;
+
+            case "CajaFuerte":
+              navigate('/cliente/CajaFuerte');
+              break;
+              case "MQTT":
+              navigate('/cliente/MQTT');
+              break;
+  
       case "cerrarSesion":
         try {
 
@@ -215,22 +225,17 @@ const EncabezadoCliente = () => {
         </div>
         <nav className={`menu ${isMobileMenuOpen ? 'menu-open' : ''}`} ref={menuRef}>
           <ul>
-            <li className={active === 'perfil' ? 'active' : ''} onClick={() => { handleClick('perfil'); handleMenuClick('perfil'); }}>
+            <li className={active === 'home' ? 'active' : ''} onClick={() => { handleClick('home'); handleMenuClick('home'); }}>
               <HomeOutlined style={{ color: '#00B300', marginRight: '8px' }} />
               Home
             </li>
-
-            <li onClick={() => handleMenuClick('iot')}>
-              <LogoutOutlined style={{ color: '#00B300', marginRight: '8px' }} />
-              Registro IOT
+            <li onClick={() => handleMenuClick('productoscliente')}>
+              <ShopOutlined style={{ color: '#00B300', marginRight: '8px' }} />
+              Productos
             </li>
-            <li onClick={() => handleMenuClick('estadoiot')}>
+            <li onClick={() => handleMenuClick('MQTT')}>
               <LogoutOutlined style={{ color: '#00B300', marginRight: '8px' }} />
-              Estado y Manipilacion de IOT
-            </li>
-            <li onClick={() => handleMenuClick('ControlCajaFuerte')}>
-              <LogoutOutlined style={{ color: '#00B300', marginRight: '8px' }} />
-              Control IoTD
+              Caja Mqtt
             </li>
             <li className={active === 'cerrarSesion' ? 'active' : ''} onClick={() => { handleClick('cerrarSesion'); handleMenuClick('cerrarSesion'); }}>
               <LogoutOutlined style={{ color: '#00B300', marginRight: '8px' }} />

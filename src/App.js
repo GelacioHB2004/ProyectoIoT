@@ -27,14 +27,19 @@ import PoliticasHi from './Componentes/Administrativo/PoliticasHi';
 import DeslindesHi from './Componentes/Administrativo/DeslindesHi';
 import UserSospechosos from './Componentes/Administrativo/UserSospechosos';
 import MFASetup from './Componentes/Autenticacion/MFASetup';
-import VerifyMFA from './Componentes/Autenticacion/VerifyMFA';
 import Productos from './Componentes/Publico/Productos';
 import Servicios from './Componentes/Publico/Servicios';
 import Registroiot from './Componentes/Cliente/RegistroIot';
-import CajaFuerteControl from './Componentes/Cliente/CajaFuerteControl';
-import ControlIoT from './Componentes/Cliente/ControlIoT';
-
-
+import CajaFuerte from './Componentes/Cliente/CajaFuerte';
+import Misiones from './Componentes/Administrativo/Mision';
+import Vision from './Componentes/Administrativo/Vision';
+import MisionF from './Componentes/Compartidos/MisionF';
+import VisionF from './Componentes/Compartidos/VisionF';
+import ProductosA from './Componentes/Administrativo/Productos';
+import ProductosP from './Componentes/Publico/ProductosP';
+import ProductosC from './Componentes/Cliente/ProductosC';
+import ControlMqtt from './Componentes/Cliente/ControlIoTMQTT';
+import ReporteProductosAdmin from './Componentes/Administrativo/Reportes';
 
 
 const App = () => {
@@ -61,13 +66,29 @@ const App = () => {
             <Route path="/admin/historial-politicas" element={<PoliticasHi />} />
             <Route path="/admin/historial-deslindes" element={<DeslindesHi />} />
             <Route path="/admin/registro-sospechosos" element={<UserSospechosos />} />
-
+            <Route path="/admin/mision" element={<Misiones />} />
+            <Route path="/admin/vision" element={<Vision />} />
+            <Route path="/admin/productos" element={<ProductosA />} />
             <Route path="/admin/iot" element={<Terminos />} />
+            <Route path="/admin/reportesproductos" element={<ReporteProductosAdmin />} />
+
             
             <Route path="/cliente" element={<PaginaPrincipalCliente />} />
             <Route path="/cliente/terminos-condiciones" element={<TerminosF />} />
             <Route path="/cliente/politicass" element={<PoliticasF />} />
             <Route path="/cliente/deslindes" element={<DeslindeF />} />
+            <Route path="/cliente/productosC" element={<ProductosC />} />
+            <Route path="/cliente/CajaFuerte" element={<CajaFuerte />} />
+            <Route path="/cliente/RegistroIoT" element={<Registroiot />} />
+            
+            
+            <Route path="/cliente/misionf" element={<MisionF />} />
+            <Route path="/cliente/visionf" element={<VisionF />} />
+            <Route path="/cliente/MQTT" element={<ControlMqtt />} />
+            
+
+
+
             <Route path="/verificar_correo" element={<SolicitarCodigo />} />
             <Route path="/validar_codigo" element={<ValidarCodigo />} />
             <Route path="/cambiar_password" element={<CambiarPassword />} />
@@ -76,12 +97,15 @@ const App = () => {
             <Route path="/politicass" element={<PoliticasF />} />
             <Route path="/deslindes" element={<DeslindeF />} />
             <Route path="/MFAS" element={<MFASetup />} />
-            <Route path="/codigo-mfa" element={<VerifyMFA />} />
             <Route path="/productos" element={<Productos />} />
+            <Route path="/cliente/productos" element={<Productos />} />
             <Route path="/servicios" element={<Servicios />} />
-            <Route path="/cliente/RegistroIoT" element={<Registroiot />} />
-            <Route path="/cliente/CajaFuerteControl" element={<CajaFuerteControl />} />
-            <Route path="/cliente/ControlCajaFuerte" element={<ControlIoT />} />
+            <Route path="/misionf" element={<MisionF />} />
+            <Route path="/visionf" element={<VisionF />} />
+            <Route path="/productosp" element={<ProductosP />} />
+
+
+            <Route path="/CajaFuerte" element={<CajaFuerte />} />
             
           </Routes>
         </LayoutConEncabezado>

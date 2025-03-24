@@ -1,254 +1,185 @@
 import React, { useState } from "react";
-import qrImage from "../Imagenes/cajalogin1.jpg"; // Imagen del QR
-import product1 from "../Imagenes/cajalogin2.jpg"; // Ejemplo de producto
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Grid, Card, CardContent, Typography } from "@mui/material";
+import product1 from "../Imagenes/cajalogin2.jpg";
 import product2 from "../Imagenes/cajalogin3.jpg";
 import product3 from "../Imagenes/cajalogin1.jpg";
 import product4 from "../Imagenes/cajalogin3.jpg";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const Productos = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [openForm, setOpenForm] = useState(false);
+  const [formData, setFormData] = useState({
+    nombre: "",
+    apellidoPaterno: "",
+    apellidoMaterno: "",
+    telefono: "",
+    correo: "",
+    contraseña: "",
+  });
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const productos = [
-    {
-      id: 1,
-      nombre: "Sapporo",
-      imagen: product1,
-      descripcion:
-        "Suplemento de hierbas orgánicas de neem, para acné suave y piel clara, purificante, ayurvédico, certificado orgánico por USDA.",
-      precio: "$189.07",
-      stock: 2,
-    },
-    {
-      id: 2,
-      nombre: "Milan Jumbo",
-      imagen: product2,
-      descripcion: "Producto excelente para el cuidado de la piel.",
-      precio: "$25.00",
-      stock: 5,
-    },
-    {
-      id: 3,
-      nombre: "Reims Premium",
-      imagen: product3,
-      descripcion: "Un producto imprescindible para tu rutina.",
-      precio: "$15.00",
-      stock: 3,
-    },
-    {
-      id: 4,
-      nombre: "Hotelera",
-      imagen: product4,
-      descripcion: "El mejor producto del mercado para tu salud.",
-      precio: "$30.00",
-      stock: 10,
-    },
+    { id: 1, nombre: "Caja Fuerte Sapporo", imagen: product1, descripcion: "Caja fuerte de alta seguridad con cerradura electrónica, ideal para proteger documentos y objetos de valor.", precio: "$189.07", stock: 2 },
+    { id: 2, nombre: "Caja Fuerte Milan Jumbo", imagen: product2, descripcion: "Modelo robusto con acceso digital y sistema de bloqueo automático para mayor seguridad.", precio: "$25.00", stock: 5 },
+    { id: 3, nombre: "Caja Fuerte Reims Premium", imagen: product3, descripcion: "Caja fuerte compacta con apertura biométrica y diseño moderno para el hogar o la oficina.", precio: "$15.00", stock: 3 },
+    { id: 4, nombre: "Caja Fuerte Hotelera", imagen: product4, descripcion: "Ideal para hoteles y departamentos, con código programable y doble mecanismo de seguridad.", precio: "$30.00", stock: 10 },
   ];
 
-  const styles = {
-    container: {
-      padding: "20px",
-      backgroundColor: "#f7f7f7",
-      fontFamily: "'Roboto', sans-serif",
-    },
-    grid: {
-      display: "grid",
-      gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
-      gap: "20px",
-      padding: "20px",
-    },
-    producto: {
-      backgroundColor: "#fff", // Blanco para los productos
-      borderRadius: "10px",
-      padding: "15px",
-      textAlign: "center",
-      cursor: "pointer",
-      transition: "transform 0.3s, box-shadow 0.3s",
-      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "space-between",
-    },
-    productoImagen: {
-      width: "100%",
-      height: "200px",
-      objectFit: "contain",
-      borderRadius: "10px",
-      backgroundColor: "#f9f9f9",
-    },
-    productoNombre: {
-      fontSize: "18px",
-      fontWeight: "500",
-      color: "#333",
-      marginTop: "10px",
-    },
-    precio: {
-      fontSize: "16px", // Reducido el tamaño del precio
-      fontWeight: "600",
-      color: "#007bff",
-      marginTop: "5px",
-    },
-    stock: {
-      fontSize: "14px",
-      color: "#666",
-      marginTop: "5px",
-    },
-    detalleContainer: {
-      maxWidth: "500px", // Reducido el ancho del contenedor
-      height: "auto", // Ajusta automáticamente la altura según el contenido
-      margin: "20px auto",
-      backgroundColor: "#e0f7fa",
-      padding: "20px",
-      borderRadius: "10px",
-      boxShadow: "0 6px 12px rgba(0, 0, 0, 0.15)",
-      textAlign: "center",
-      display: "flex",
-      flexDirection: "column",
-      gap: "15px", // Espaciado más pequeño entre los elementos
-      position: "relative",
-    },
-    detalleTitulo: {
-      fontSize: "22px", // Título un poco más pequeño
-      fontWeight: "700",
-      color: "#333",
-    },
-    detalleImagen: {
-      width: "100%",
-      maxWidth: "300px", // Reducción de la imagen
-      height: "300px",
-      objectFit: "cover",
-      borderRadius: "10px",
-      display: "block",
-      margin: "0 auto",
-      boxShadow: "0 6px 12px rgba(0, 0, 0, 0.2)",
-    },
-    detalleDescripcion: {
-      textAlign: "center", // Descripción centrada
-      color: "#555",
-      fontSize: "14px", // Texto más pequeño
-      lineHeight: "1.6",
-      maxWidth: "400px", // Limita el ancho de la descripción
-      margin: "0 auto", // Centrado
-    },
-    qrImagen: {
-      marginTop: "20px",
-      maxWidth: "120px", // Tamaño del QR más pequeño
-      display: "block",
-      marginLeft: "auto",
-      marginRight: "auto",
-    },
-    qrTexto: {
-      fontSize: "16px", // Tamaño del texto del QR
-      fontWeight: "600",
-      color: "#333",
-      marginTop: "10px",
-    },
-    botonContainer: {
-      display: "flex",
-      justifyContent: "center",
-      gap: "15px",
-      marginTop: "15px",
-    },
-    boton: {
-      padding: "10px 25px",
-      backgroundColor: "#00796b",
-      color: "white",
-      border: "none",
-      borderRadius: "5px",
-      cursor: "pointer",
-      fontSize: "16px",
-      transition: "background-color 0.3s, transform 0.3s",
-    },
-    botonHover: {
-      backgroundColor: "#00796b",
-    
-    },
-    precioDetalle: {
-      fontSize: "16px", // Igual al tamaño de la palabra "Precio"
-      fontWeight: "600",
-      color: "#007bff",
-      display: "inline-block", // Mantiene el precio en la misma línea
-      marginRight: "20px", // Espacio entre precio y stock
-    },
-    stockDetalle: {
-      fontSize: "16px",
-      color: "#888",
-      display: "inline-block", // Mantiene el stock en la misma línea
-    },
-    precioTexto: {
-      fontSize: "16px",
-      color: "#333",
-      fontWeight: "600",
-    },
-    stockTexto: {
-      fontSize: "16px",
-      color: "#333",
-      fontWeight: "600",
-    },
+  // Manejar cambios en el formulario
+  const handleInputChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  // Verificar si el nombre ya existe en la BD
+  const verificarNombre = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/api/comprasiot/verificar-usuario", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ nombre: formData.nombre }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.existe) {
+        registrarCompra(data.usuarioId);
+      } else {
+        // Cerramos el formulario y mostramos el mensaje de Swal
+        setOpenForm(false);
+        Swal.fire({
+          title: "Usuario no encontrado",
+          text: "Necesitas crear una cuenta. ¿Ir al login?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonText: "Sí, ir al login",
+          cancelButtonText: "Cancelar"
+        }).then((result) => {
+          if (result.isConfirmed) {
+            navigate("/login");
+          }
+        });
+      }
+    } catch (error) {
+      console.error("Error verificando el nombre:", error);
+      Swal.fire({
+        title: "Error",
+        text: "Error al conectar con el servidor.",
+        icon: "error"
+      });
+    }
+  };
+
+  // Registrar la compra en la BD
+  const registrarCompra = async (usuarioId) => {
+    try {
+      const response = await fetch("http://localhost:5000/api/comprasiot/registrar-compra", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...formData, producto: selectedProduct.nombre, usuarioId }),
+      });
+
+      if (response.ok) {
+        Swal.fire({
+          title: "Compra realizada",
+          text: "Tu compra fue registrada con éxito.",
+          icon: "success"
+        }).then(() => {
+          // Guardar los datos en el localStorage
+          localStorage.setItem('usuario', JSON.stringify(formData));
+
+          // Redirigir al componente de control de la caja fuerte
+          navigate("/CajaFuerte");
+        });
+
+        // Limpiar el formulario después de la compra exitosa
+        setOpenForm(false);
+        setFormData({ nombre: "", apellidoPaterno: "", apellidoMaterno: "", telefono: "", correo: "", contraseña: "" });
+      } else {
+        Swal.fire({
+          title: "Error",
+          text: "No se pudo completar la compra.",
+          icon: "error"
+        });
+      }
+    } catch (error) {
+      console.error("Error registrando la compra:", error);
+      Swal.fire({
+        title: "Error",
+        text: "Error al conectar con el servidor.",
+        icon: "error"
+      });
+    }
   };
 
   return (
-    <div style={styles.container}>
+    <div style={{ padding: "20px", backgroundColor: "#f4f4f4" }}>
       {selectedProduct ? (
-        <div style={styles.detalleContainer}>
-          <h2 style={styles.detalleTitulo}>{selectedProduct.nombre}</h2>
-          <img
-            src={selectedProduct.imagen}
-            alt={selectedProduct.nombre}
-            style={styles.detalleImagen}
-          />
-          <p style={styles.detalleDescripcion}>{selectedProduct.descripcion}</p>
-          <div>
-            <span style={styles.precioTexto}>Precio:</span>
-            <span style={styles.precioDetalle}>{selectedProduct.precio}</span>
-            <span style={styles.stockTexto}>Disponibles:</span>
-            <span style={styles.stockDetalle}>{selectedProduct.stock}</span>
-          </div>
-          
-          {/* QR y texto */}
-          <div>
-            <p style={styles.qrTexto}>QR para modelo 3D</p>
-            <img src={qrImage} alt="QR Code" style={styles.qrImagen} />
-          </div>
-
-          <div style={styles.botonContainer}>
-            <button
-              style={styles.boton}
-              onMouseEnter={(e) => (e.target.style.backgroundColor = styles.botonHover.backgroundColor)}
-              onMouseLeave={(e) => (e.target.style.backgroundColor = "#28a745")}
-              onClick={() => setSelectedProduct(null)} // Ocultar detalles y QR
-            >
-              Comprar ahora
-            </button>
-          </div>
-        </div>
-      ) : (
-        <div style={styles.grid}>
-          {productos.map((producto) => (
-            <div
-              key={producto.id}
-              style={styles.producto}
-              onClick={() => setSelectedProduct(producto)} // Mostrar detalles
-              onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
-              onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
-            >
-              <img
-                src={producto.imagen}
-                alt={producto.nombre}
-                style={styles.productoImagen}
-              />
-              <h3 style={styles.productoNombre}>{producto.nombre}</h3>
-              <div>
-                <span style={styles.precioTexto}>Precio:</span>
-                <span style={styles.precio}>{producto.precio}</span>
-              </div>
-              <div>
-                <span style={styles.stockTexto}>Disponibles:</span>
-                <span style={styles.stock}>{producto.stock}</span>
-              </div>
+        <Card sx={{ maxWidth: 500, margin: "auto", padding: "20px", borderRadius: "10px", boxShadow: "0px 4px 10px rgba(0,0,0,0.1)" }}>
+          <Typography variant="h5" fontWeight="bold" textAlign="center" color="primary">{selectedProduct.nombre}</Typography>
+          <img src={selectedProduct.imagen} alt={selectedProduct.nombre} style={{ width: "100%", height: "280px", objectFit: "cover", borderRadius: "10px", marginTop: "15px" }} />
+          <CardContent>
+            <Typography variant="body1" color="textSecondary" textAlign="justify">{selectedProduct.descripcion}</Typography>
+            <Typography variant="h6" fontWeight="bold" color="primary" mt={2}>
+              Precio: {selectedProduct.precio}
+            </Typography>
+            <Typography variant="body2" color="textSecondary">Disponibles: {selectedProduct.stock}</Typography>
+            <div style={{ display: "flex", justifyContent: "center", gap: "15px", marginTop: "20px" }}>
+              <Button variant="contained" color="primary" onClick={() => setOpenForm(true)}>Comprar ahora</Button>
+              <Button variant="outlined" color="secondary" onClick={() => setSelectedProduct(null)}>Volver</Button>
             </div>
+          </CardContent>
+        </Card>
+      ) : (
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: "20px" }}>
+          {productos.map((producto) => (
+            <Card key={producto.id} sx={{ borderRadius: "10px", boxShadow: "0px 4px 8px rgba(0,0,0,0.1)", cursor: "pointer" }} onClick={() => setSelectedProduct(producto)}>
+              <img src={producto.imagen} alt={producto.nombre} style={{ width: "100%", height: "220px", objectFit: "cover", borderTopLeftRadius: "10px", borderTopRightRadius: "10px" }} />
+              <CardContent>
+                <Typography variant="h6" fontWeight="bold">{producto.nombre}</Typography>
+                <Typography variant="body2" color="textSecondary">{producto.descripcion}</Typography>
+                <Typography variant="body1" color="primary" fontWeight="bold" mt={1}>
+                  {producto.precio}
+                </Typography>
+                <Typography variant="body2" color="textSecondary">Disponibles: {producto.stock}</Typography>
+              </CardContent>
+            </Card>
           ))}
         </div>
       )}
+
+      {/* Formulario de compra */}
+      <Dialog open={openForm} onClose={() => setOpenForm(false)}>
+        <DialogTitle>Finalizar Compra</DialogTitle>
+        <DialogContent>
+          <Grid container spacing={2}>
+            {error && <Typography color="error">{error}</Typography>}
+            <Grid item xs={12} sm={6}>
+              <TextField fullWidth label="Nombre" name="nombre" value={formData.nombre} onChange={handleInputChange} required />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField fullWidth label="Apellido Paterno" name="apellidoPaterno" value={formData.apellidoPaterno} onChange={handleInputChange} required />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField fullWidth label="Apellido Materno" name="apellidoMaterno" value={formData.apellidoMaterno} onChange={handleInputChange} required />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField fullWidth label="Teléfono" name="telefono" value={formData.telefono} onChange={handleInputChange} required />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField fullWidth label="Correo" name="correo" type="email" value={formData.correo} onChange={handleInputChange} required />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField fullWidth label="Contraseña" name="contraseña" type="password" value={formData.contraseña} onChange={handleInputChange} required />
+            </Grid>
+          </Grid>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={verificarNombre} color="primary" variant="contained">Finalizar Compra</Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };
