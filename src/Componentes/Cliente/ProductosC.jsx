@@ -606,7 +606,7 @@ const ProductosC = () => {
                         onClose={handleSnackbarClose}
                         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
                     >
-                        <Alert onClose={handleSnackbarClose} severity={Object.keys(errors).length > 0 ? "error" : "success"} sx={{ width: "100%" }}>
+                        <Alert onClose={handleSnackbarClose} severity={Object.keys(errors).length > 0 ? "success" : "success"} sx={{ width: "100%" }}>
                             {snackbarMessage}
                         </Alert>
                     </Snackbar>
