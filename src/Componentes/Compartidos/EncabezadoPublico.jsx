@@ -211,10 +211,6 @@ const EncabezadoPublico = () => {
               <HomeOutlined style={{ color: '#00B300' }} />
               Home
             </li>
-            <li className={active === 'servicios' ? 'active' : ''} onClick={() => { handleClick('servicios'); handleMenuClick('servicios'); }}>
-              <AppstoreOutlined style={{ color: '#00B300' }} />
-              Servicios
-            </li>
             <li className={active === 'productos' ? 'active' : ''} onClick={() => { handleClick('productos'); handleMenuClick('productos'); }}>
               <ShoppingCartOutlined style={{ color: '#00B300' }} />
               Productos

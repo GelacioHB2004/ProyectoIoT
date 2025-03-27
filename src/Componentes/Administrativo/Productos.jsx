@@ -21,6 +21,10 @@ import {
     Pagination,
     createTheme,
     ThemeProvider,
+    Select,
+    MenuItem,
+    InputLabel,
+    FormControl,
 } from "@mui/material";
 import { Alert } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
@@ -37,11 +41,13 @@ const theme = createTheme({
 
 const Productos = () => {
     const [productos, setProductos] = useState([]);
+    const [macs, setMacs] = useState([]); // Lista de MACs disponibles
     const [nombre, setNombre] = useState("");
     const [descripcion, setDescripcion] = useState("");
     const [precio, setPrecio] = useState("");
     const [stock, setStock] = useState("");
     const [categoria, setCategoria] = useState("");
+    const [mac, setMac] = useState(""); // Campo para la MAC seleccionada
     const [imagen, setImagen] = useState(null);
     const [editando, setEditando] = useState(false);
     const [productoId, setProductoId] = useState(null);
@@ -59,29 +65,38 @@ const Productos = () => {
 
     useEffect(() => {
         obtenerProductos();
+        obtenerMacs();
     }, []);
 
-    // Funciones de validación
-    const soloLetras = (valor) => /^[A-Za-z\s]*$/.test(valor);
-    const numeroPositivo = (valor) => /^\d*\.?\d*$/.test(valor) && (valor === "" || parseFloat(valor) >= 0);
+    // Obtener las MACs disponibles
+    const obtenerMacs = async () => {
+        try {
+            const response = await fetch("https://backendiot-h632.onrender.com/api/productos/maciots");
+            const data = await response.json();
+            setMacs(data);
+        } catch (error) {
+            console.error("Error al obtener las MACs:", error);
+            setSnackbarMessage("Error al obtener las MACs");
+            setSnackbarSeverity("error");
+            setSnackbarOpen(true);
+        }
+    };
 
+    // Funciones de validación (restauradas a la versión original)
     const validarFormulario = () => {
         const nuevosErrores = {};
         
-        if (!soloLetras(nombre)) nuevosErrores.nombre = "Solo se permiten letras";
         if (!nombre) nuevosErrores.nombre = "El nombre es requerido";
         
-        if (!soloLetras(descripcion)) nuevosErrores.descripcion = "Solo se permiten letras";
         if (!descripcion) nuevosErrores.descripcion = "La descripción es requerida";
         
-        if (!soloLetras(categoria)) nuevosErrores.categoria = "Solo se permiten letras";
         if (!categoria) nuevosErrores.categoria = "La categoría es requerida";
         
-        if (!numeroPositivo(precio)) nuevosErrores.precio = "Debe ser un número positivo";
         if (!precio) nuevosErrores.precio = "El precio es requerido";
         
-        if (!numeroPositivo(stock)) nuevosErrores.stock = "Debe ser un número positivo";
         if (!stock) nuevosErrores.stock = "El stock es requerido";
+
+        if (!mac) nuevosErrores.mac = "La MAC es requerida";
 
         setErrores(nuevosErrores);
         return Object.keys(nuevosErrores).length === 0;
@@ -133,6 +148,7 @@ const Productos = () => {
         formData.append("precio", precio);
         formData.append("stock", stock);
         formData.append("categoria", categoria);
+        formData.append("mac", mac); // Agregar la MAC seleccionada
         if (imagen) {
             formData.append("imagen", imagen);
         }
@@ -147,7 +163,10 @@ const Productos = () => {
                 body: formData,
             });
 
-            if (!response.ok) throw new Error("Error en la solicitud");
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || "Error en la solicitud");
+            }
 
             obtenerProductos();
             limpiarFormulario();
@@ -157,7 +176,7 @@ const Productos = () => {
             setModalOpen(false);
         } catch (error) {
             console.error("Error al guardar el producto:", error);
-            setSnackbarMessage("Error al guardar el producto");
+            setSnackbarMessage(error.message || "Error al guardar el producto");
             setSnackbarSeverity("error");
             setSnackbarOpen(true);
         }
@@ -171,6 +190,7 @@ const Productos = () => {
         setPrecio(producto.precio.toString());
         setStock(producto.stock.toString());
         setCategoria(producto.categoria || "");
+        setMac(producto.macId || ""); // Cargar la MAC seleccionada
         setImagen(null);
         setModalOpen(true);
     };
@@ -203,6 +223,7 @@ const Productos = () => {
         setPrecio("");
         setStock("");
         setCategoria("");
+        setMac("");
         setImagen(null);
         setEditando(false);
         setProductoId(null);
@@ -290,6 +311,7 @@ const Productos = () => {
                                     <TableCell>Precio</TableCell>
                                     <TableCell>Stock</TableCell>
                                     <TableCell>Categoría</TableCell>
+                                    <TableCell>MAC</TableCell>
                                     <TableCell>Acciones</TableCell>
                                 </TableRow>
                             </TableHead>
@@ -301,6 +323,7 @@ const Productos = () => {
                                         <TableCell>${producto.precio}</TableCell>
                                         <TableCell>{producto.stock}</TableCell>
                                         <TableCell>{producto.categoria || "Sin categoría"}</TableCell>
+                                        <TableCell>{producto.mac || "Sin MAC"}</TableCell>
                                         <TableCell>
                                             <IconButton 
                                                 color="primary" 
@@ -361,11 +384,7 @@ const Productos = () => {
                                                 fullWidth
                                                 label="Nombre"
                                                 value={nombre}
-                                                onChange={(e) => {
-                                                    if (soloLetras(e.target.value)) {
-                                                        setNombre(e.target.value);
-                                                    }
-                                                }}
+                                                onChange={(e) => setNombre(e.target.value)} // Sin validación de solo letras
                                                 required
                                                 error={!!errores.nombre}
                                                 helperText={errores.nombre}
@@ -386,11 +405,7 @@ const Productos = () => {
                                                 multiline
                                                 rows={4}
                                                 value={descripcion}
-                                                onChange={(e) => {
-                                                    if (soloLetras(e.target.value)) {
-                                                        setDescripcion(e.target.value);
-                                                    }
-                                                }}
+                                                onChange={(e) => setDescripcion(e.target.value)} // Sin validación de solo letras
                                                 required
                                                 error={!!errores.descripcion}
                                                 helperText={errores.descripcion}
@@ -409,11 +424,7 @@ const Productos = () => {
                                                 fullWidth
                                                 label="Precio"
                                                 value={precio}
-                                                onChange={(e) => {
-                                                    if (numeroPositivo(e.target.value)) {
-                                                        setPrecio(e.target.value);
-                                                    }
-                                                }}
+                                                onChange={(e) => setPrecio(e.target.value)} // Sin validación de número positivo
                                                 required
                                                 error={!!errores.precio}
                                                 helperText={errores.precio}
@@ -433,11 +444,7 @@ const Productos = () => {
                                                 fullWidth
                                                 label="Stock"
                                                 value={stock}
-                                                onChange={(e) => {
-                                                    if (numeroPositivo(e.target.value)) {
-                                                        setStock(e.target.value);
-                                                    }
-                                                }}
+                                                onChange={(e) => setStock(e.target.value)} // Sin validación de número positivo
                                                 required
                                                 error={!!errores.stock}
                                                 helperText={errores.stock}
@@ -457,11 +464,7 @@ const Productos = () => {
                                                 fullWidth
                                                 label="Categoría"
                                                 value={categoria}
-                                                onChange={(e) => {
-                                                    if (soloLetras(e.target.value)) {
-                                                        setCategoria(e.target.value);
-                                                    }
-                                                }}
+                                                onChange={(e) => setCategoria(e.target.value)} // Sin validación de solo letras
                                                 required
                                                 error={!!errores.categoria}
                                                 helperText={errores.categoria}
@@ -474,6 +477,46 @@ const Productos = () => {
                                                     }
                                                 }}
                                             />
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <FormControl fullWidth required error={!!errores.mac}>
+                                                <InputLabel sx={{
+                                                    '&.Mui-focused': {
+                                                        color: '#2185d0',
+                                                    }
+                                                }}>
+                                                    MAC
+                                                </InputLabel>
+                                                <Select
+                                                    value={mac}
+                                                    onChange={(e) => setMac(e.target.value)}
+                                                    sx={{
+                                                        '& .MuiOutlinedInput-notchedOutline': {
+                                                            borderColor: errores.mac ? '#f44336' : 'inherit',
+                                                        },
+                                                        '&:hover .MuiOutlinedInput-notchedOutline': {
+                                                            borderColor: '#2185d0',
+                                                        },
+                                                        '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                                            borderColor: '#2185d0',
+                                                        },
+                                                    }}
+                                                >
+                                                    <MenuItem value="">
+                                                        <em>Seleccione una MAC</em>
+                                                    </MenuItem>
+                                                    {macs.map((macItem) => (
+                                                        <MenuItem key={macItem._id} value={macItem._id}>
+                                                            {macItem.mac}
+                                                        </MenuItem>
+                                                    ))}
+                                                </Select>
+                                                {errores.mac && (
+                                                    <Typography color="error" variant="caption">
+                                                        {errores.mac}
+                                                    </Typography>
+                                                )}
+                                            </FormControl>
                                         </Grid>
                                         <Grid item xs={12}>
                                             <input

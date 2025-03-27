@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { AppstoreOutlined, LogoutOutlined, HomeOutlined, FileTextOutlined, TeamOutlined } from '@ant-design/icons';
+import { AppstoreOutlined, LogoutOutlined, HomeOutlined, FileTextOutlined, TeamOutlined,ShopOutlined  } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -68,6 +68,9 @@ const EncabezadoAdministrativo = () => {
         break;
       case "productos":
           navigate('/admin/productos');
+        break;
+        case "maciotss":
+          navigate('/admin/maciot');
         break;
         case "Reportes":
           navigate('/admin/reportesproductos');
@@ -296,12 +299,20 @@ const EncabezadoAdministrativo = () => {
                 </ul>
               )}
             </li>
-            <li onClick={() => handleMenuClick('productos')}>
-              <LogoutOutlined style={{ color: '#00B300', marginRight: '8px' }} />
-              Productos
+            <li className="dropdown" onClick={() => toggleDropdown('productoss')}>
+              <span>
+                <ShopOutlined style={{ color: '#00B300', marginRight: '8px' }} />
+                Productos
+              </span>
+              {openDropdown === 'productoss' && (
+                <ul className="dropdown-menu">
+                  <li onClick={() => { handleClick('productos'); handleMenuClick('productos'); }}>Alta Prodcutos</li>
+                  <li onClick={() => { handleClick('maciotss'); handleMenuClick('maciotss'); }}>Mac</li>
+                </ul>
+              )}
             </li>
-            <li onClick={() => handleMenuClick('Reportes')}>
-              <LogoutOutlined style={{ color: '#00B300', marginRight: '8px' }} />
+            <li  onClick={() => handleMenuClick('Reportes')}>
+              <FileTextOutlined style={{ color: '#00B300', marginRight: '8px' }} />
               Generar Reporte
             </li>
 

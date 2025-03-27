@@ -104,7 +104,7 @@ const Misiones = () => {
                 return;
             }
 
-            await axios.post("http://localhost:5000/api/mision", { titulo, contenido });
+            await axios.post("https://backendiot-h632.onrender.com/api/mision", { titulo, contenido });
             setTitulo("");
             setContenido("");
             obtenerMisiones();
@@ -134,7 +134,7 @@ const Misiones = () => {
     // Función para eliminar una misión
     const eliminarMision = async (id) => {
         try {
-            await axios.delete(`http://localhost:5000/api/mision/${id}`);
+            await axios.delete(`https://backendiot-h632.onrender.com/api/mision/${id}`);
             obtenerMisiones();
             mostrarSnackbar("Misión eliminada exitosamente", "success");
         } catch (error) {
@@ -352,7 +352,7 @@ const Misiones = () => {
                                     variant="contained"
                                     color="primary"
                                     onClick={async () => {
-                                        await axios.put(`http://localhost:5000/api/mision/${misionId}`, { titulo, contenido });
+                                        await axios.put(`https://backendiot-h632.onrender.com/api/mision/${misionId}`, { titulo, contenido });
                                         setTitulo("");
                                         setContenido("");
                                         setEditando(false);

@@ -40,6 +40,7 @@ import ProductosP from './Componentes/Publico/ProductosP';
 import ProductosC from './Componentes/Cliente/ProductosC';
 import ControlMqtt from './Componentes/Cliente/ControlIoTMQTT';
 import ReporteProductosAdmin from './Componentes/Administrativo/Reportes';
+import GestionarMacs from './Componentes/Administrativo/MacIoT';
 
 
 const App = () => {
@@ -71,6 +72,7 @@ const App = () => {
             <Route path="/admin/productos" element={<ProductosA />} />
             <Route path="/admin/iot" element={<Terminos />} />
             <Route path="/admin/reportesproductos" element={<ReporteProductosAdmin />} />
+            <Route path="/admin/maciot" element={<GestionarMacs />} />
 
             
             <Route path="/cliente" element={<PaginaPrincipalCliente />} />
